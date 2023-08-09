@@ -1,6 +1,7 @@
 <h1 align="center">Hi 👋, I'm André Ramos</h1>
 <h3 align="center">A passionate full stack developer from Portugal</h3>
-![](https://github.com/AndreRamos/GIF.gif)
+![GIF](https://github.com/Andr3Ramos/AndreRamos/assets/126552537/afc35388-8c02-4c9a-88c6-d094f4560210)
+
 
 - 📫 How to reach me **andrefcramos92@gmail.com**
 
