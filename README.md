@@ -1,6 +1,6 @@
 <h1 align="center">Hi 👋, I'm André Ramos</h1>
 <h3 align="center">A passionate full stack developer from Portugal</h3>
-![81178b47a8598f0c81c4799f2cdd4057](https://github.com/Andr3Ramos/AndreRamos/assets/126552537/4cd49c87-50b4-47b7-a9db-26cf84ccb1f7)
+https://github.com/Andr3Ramos/AndreRamos/assets/126552537/4cd49c87-50b4-47b7-a9db-26cf84ccb1f7
 
 
 - 📫 How to reach me **andrefcramos92@gmail.com**
