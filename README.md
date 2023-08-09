@@ -1,6 +1,7 @@
 <h1 align="center">Hi 👋, I'm André Ramos</h1>
 <h3 align="center">A passionate full stack developer from Portugal</h3>
-https://www.google.pt/imgres?imgurl=https%3A%2F%2Fi.pinimg.com%2Foriginals%2F81%2F17%2F8b%2F81178b47a8598f0c81c4799f2cdd4057.gif&tbnid=QCZULViz1nWbzM&vet=12ahUKEwjsmImbq8-AAxV2mycCHZ8iAawQMygvegUIARCPAw..i&imgrefurl=https%3A%2F%2Fwww.pinterest.com%2Fpin%2Fciudad-futurista--601160250270667206%2F&docid=va-hCZbNzlpFMM&w=800&h=600&q=animated%20coding%20gif&hl=pt-BR&ved=2ahUKEwjsmImbq8-AAxV2mycCHZ8iAawQMygvegUIARCPAw
+![81178b47a8598f0c81c4799f2cdd4057](https://github.com/Andr3Ramos/AndreRamos/assets/126552537/4cd49c87-50b4-47b7-a9db-26cf84ccb1f7)
+
 
 - 📫 How to reach me **andrefcramos92@gmail.com**
 
