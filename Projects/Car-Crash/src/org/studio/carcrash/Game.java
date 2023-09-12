@@ -63,7 +63,6 @@ public class Game {
             cars[i] = CarFactory.getNewCar(grid);
             cars[i].setCollisionDetector(collisionDetector);
         }
-
     }
 
     /**
@@ -80,7 +79,6 @@ public class Game {
 
             moveAllCars();
         }
-
     }
 
     /**
@@ -92,7 +90,5 @@ public class Game {
             c.move();
             collisionDetector.check(c);
         }
-
     }
-
 }
