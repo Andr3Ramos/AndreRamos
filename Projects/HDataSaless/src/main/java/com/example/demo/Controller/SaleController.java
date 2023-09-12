@@ -3,6 +3,7 @@ package com.example.demo.Controller;
 import com.example.demo.Data.SaleRepository;
 import com.example.demo.Model.Client;
 import com.example.demo.Model.Sale;
+import com.example.demo.Model.SaleItem;
 import com.example.demo.Services.SaleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -44,15 +45,15 @@ public class SaleController {
 
 
     // Add a Sale
-  /*  @PostMapping(path = "/add")
+   @PostMapping(path = "/add")
     public ResponseEntity<String> createSale(
         @RequestParam int clientId,
         @RequestParam int storeId,
-        @RequestParam List<Integer> productIds){
-        saleService.makeSale(clientId,storeId,productIds);
+        @RequestParam List<SaleItem> productIds){
+        saleRepository.makeSale(clientId,storeId,productIds);
     return  ResponseEntity.ok("Sale Created Sucefully");
     }
-
+/*
     // Get the specific client sales
     @GetMapping("/client/{clientId}/sales")
     public ResponseEntity<List<Sale>> getSalesByClientId(@PathVariable long clientId) {
