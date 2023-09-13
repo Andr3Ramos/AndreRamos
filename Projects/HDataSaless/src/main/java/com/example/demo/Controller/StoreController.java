@@ -4,6 +4,7 @@ import com.example.demo.Data.ProductRepository;
 import com.example.demo.Data.StoreRepository;
 import com.example.demo.Model.Product;
 import com.example.demo.Model.Store;
+import com.example.demo.Services.ProductService;
 import com.example.demo.Services.StoreService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,18 +17,10 @@ import java.util.Optional;
 @RequestMapping(path = "api/store")
 public class StoreController {
 
-
-
-    private final ProductRepository productRepository;
-
-    private final StoreRepository storeRepository;
-
     StoreService storeService;
 
-    public StoreController(ProductRepository productRepository, StoreRepository storeRepository, StoreService storeService) {
-        this.productRepository = productRepository;
-        this.storeRepository = storeRepository;
-        this.storeService = storeService;
+    public StoreController(StoreService storeService) {
+          this.storeService = storeService;
     }
 
 
@@ -76,34 +69,20 @@ public class StoreController {
         return ResponseEntity.ok("Store Deleted Successfully");
     }
 
-/*
+
     @PutMapping(path ="/add-product/{storeId}/{productId}")
     public ResponseEntity<String> addProductToStore(@PathVariable long productId, @PathVariable long storeId){
-        Optional<Store> optionalStore = storeRepository.findById(storeId);
-        Product optionalProduct = productRepository.findById(productId);
-
-       if(optionalStore.isPresent() && optionalProduct.equals(productId)){
-           Store store = optionalStore.get();
-            //store.addProduct(product);
-           storeRepository.save(store);
-           return ResponseEntity.ok("Product ID:"+ productId + " Added Successfully to Store " + storeId);
+       storeService.addProductToStore(productId,storeId);
+       return ResponseEntity.ok("Product ID:"+ productId + " Added Successfully to Store " + storeId);
        }
 
-       return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Store  or Products Not found");
-    }
 
     //Get the products of a specific store
-    //needs a query
-    @RequestMapping(path = "{storeId}/product")
-    public ResponseEntity<List<Product>> showStoreProducts(@PathVariable long storeId){
-        Optional<Store> store = storeRepository.findById(storeId);
-        if(store==null){
-            return ResponseEntity.notFound().build();
-        }
 
-       List<Product> products = store.get().getProductList();
+    @RequestMapping(path = "{storeId}/product") //TEST
+    public List<Product> showStoreProducts(@PathVariable long storeId){
+        return storeService.showStoreProducts(storeId);
 
-        return ResponseEntity.ok(products);
 
     }
     // Add a product to a specific store
@@ -112,29 +91,16 @@ public class StoreController {
 
     // Falta resolver a Sale para depois voltar aqui <------------------------------------------------
     @GetMapping("/most-stock-sold")
-    public ResponseEntity<Store> getStoreWithMostStockSold() {
-        Store storeWithMostStockSold = storeService.getStoreWithMostStockSold();
+    public ResponseEntity<StoreService> getStoreWithMostStockSold() {
 
-        if (storeWithMostStockSold != null) {
-            return ResponseEntity.ok(storeWithMostStockSold);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+         storeService.getStoreWithMostStockSold();
+         return ResponseEntity.ok(storeService);
     }
 
     //Get Store with the most sales :: NOT WORKING
     @GetMapping("/most-sales")
     public ResponseEntity<Store> getStoreWithMostSales() {
-        Store storeWithMostSales = storeService.getStoreWithMostSales();
-
-        if (storeWithMostSales != null) {
-            return ResponseEntity.ok(storeWithMostSales);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        Store getStoreWithMostSales = storeService.getStoreWithMostSales();
+        return ResponseEntity.ok(getStoreWithMostSales);
     }
-
-*/
-
-
 }

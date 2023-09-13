@@ -13,76 +13,91 @@ import java.util.*;
 @Service
 public class SaleService {
 
-    private List<Sale> saleList;
-//    private List<SaleItem> saleItemList;
-
     private final SaleRepository saleRepository;
 
+    private final ClientRepository clientRepository;
 
-    public SaleService(SaleRepository saleRepository, ProductRepository productRepository, ClientRepository clientRepository, StoreRepository storeRepository) {
+    private final StoreRepository storeRepository;
+    
+    private final ProductRepository productRepository;
 
+
+    public SaleService(SaleRepository saleRepository, ClientRepository clientRepository, StoreRepository storeRepository, ProductRepository productRepository) {
         this.saleRepository = saleRepository;
-
-        this.saleList = new ArrayList<>();
-
-
+        this.clientRepository = clientRepository;
+        this.storeRepository = storeRepository;
+        this.productRepository = productRepository;
     }
 
+
+    public List<Sale> findAll() {
+        return saleRepository.findAll();
+    }
+
+    public Sale findById(long id) {
+        return saleRepository.findById(id);
+    }
+
+
+
     //Create a Sale
-  /* public void makeSale(long clientId, long storeId, List<Integer> productIds) {
-        Client client = clientRepository.findClientById(clientId);
-        Store store = storeRepository.findStoreById(storeId);
-        double totalPrice = 0.0;
-        List<SaleItem> saleItemList = new ArrayList<>();
-        for (Integer productId : productIds) {
-            Product product = productRepository.findProductById(productId);
-            saleItemList.add(new SaleItem(product, 1)); // Assuming quantity is 1
-            totalPrice += product.getSellPrice();
-        }
-        Sale sale = new Sale(client, store, totalPrice, saleItemList);
-        saleRepository.save(sale);
-         }
+       public void addSale(long clientId, long storeId, List<SaleItem> saleItems) { //TEST
+            Client client = clientRepository.findById(clientId);
+            Store store = storeRepository.findById(storeId);
+            double totalPrice = 0.0;
+            List<SaleItem> saleItemList = new ArrayList<>();
+            for (SaleItem saleItem : saleItems ) {
+               SaleItem setSaleItem = new SaleItem(saleItem.getProducts(),saleItem.getQuantitySold());
+                    totalPrice += setSaleItem.getTotalCost();
+            }
+           Sale sale = new Sale(client,store,saleItems,totalPrice);
+
+            saleRepository.save(sale);
+             }
 
 
 
     //Get the sale by a specific client
-    public List<Sale> getSalesByClientId(long clientId) {
-        List<Sale> clientSales = new ArrayList<>();
-        for (Sale sale : saleList) {
+    public List<Sale> getSalesByClientId(long clientId) { //TEST
+        List<Sale> salesByClient = new ArrayList<>();
+
+        for (Sale sale : saleRepository.findAll()) {
             if (sale.getClient().getId() == clientId) {
-                clientSales.add(sale);
+                salesByClient.add(sale);
             }
         }
-        return clientSales;
+
+        return salesByClient;
     }
 
     //Get the client with the most buys
-    public Client getClientWithMostBuys() {
-        Map<Client, Integer> clientPurchaseCounts = new HashMap<>();
+    public Optional<Client> getClientWithMostStockSold() {  //TEST
+        Map<Long, Integer> clientStockSoldMap = new HashMap<>();
 
-        for (Sale sale : saleList) {
+        for (Sale sale : saleRepository.findAll()) {
             Client client = sale.getClient();
-            clientPurchaseCounts.put(client, clientPurchaseCounts.getOrDefault(client, 0) + 1);
-        }
+            int stockSold = sale.getItems().stream()
+                    .mapToInt(SaleItem::getQuantitySold)
+                    .sum();
 
-        Client clientWithMostBuys = null;
-        int maxBuys = 0;
-
-        for (Map.Entry<Client, Integer> entry : clientPurchaseCounts.entrySet()) {
-            if (entry.getValue() > maxBuys) {
-                maxBuys = entry.getValue();
-                clientWithMostBuys = entry.getKey();
+            if (clientStockSoldMap.containsKey(client.getId())) {
+                clientStockSoldMap.put(client.getId(), clientStockSoldMap.get(client.getId()) + stockSold);
+            } else {
+                clientStockSoldMap.put(client.getId(), stockSold);
             }
         }
 
-        return clientWithMostBuys;
+        Long clientIdWithMostStockSold = Collections.max(clientStockSoldMap.entrySet(), Map.Entry.comparingByValue()).getKey();
+
+        return clientRepository.findById(clientIdWithMostStockSold);
     }
 
+
     //Get the client with the most purchases
-  /*  public Product getProductWithMostPurchases() {
+    public Product getProductWithMostPurchases() { //TEST
         Map<Long, Integer> productPurchaseCount = new HashMap<>();
 
-        for (Sale sale : saleList) {
+        for (Sale sale : saleRepository.findAll()) {
             for (SaleItem saleItem : sale.getItems()) {
                 long productId = saleItem.getProducts().getId();
                 productPurchaseCount.put(productId, productPurchaseCount.getOrDefault(productId, 0) + 1);
@@ -90,9 +105,10 @@ public class SaleService {
         }
 
         long mostPurchasedProductId = Collections.max(productPurchaseCount.entrySet(), Map.Entry.comparingByValue()).getKey();
-        return productServicerep.getProductById(mostPurchasedProductId);
+
+        return productRepository.findById(mostPurchasedProductId);
     }
-*/
+
 }
 
 

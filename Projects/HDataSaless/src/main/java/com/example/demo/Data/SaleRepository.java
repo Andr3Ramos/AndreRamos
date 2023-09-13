@@ -14,14 +14,9 @@ import java.util.List;
 @Repository
 public interface SaleRepository extends CrudRepository<Sale,Long> {
 
-  //  void makeSale();
-/*
-    @Query("INSERT INTO  Sales(clientid,storeId,productIds) VALUES (:client_Id, :store_Id , :items)")
-    @Modifying
-    @Transactional
-    void makeSale(@Param("clientId") long clientId, @Param("storeId") long storeId, @Param("productIds") List<SaleItem> items );
-*/
+    List<Sale> findAll();
 
+    Sale findById(long id);
 
 
 }

@@ -21,7 +21,10 @@ public class Store {
     private String address;
     @OneToMany
     private List<Product> productList;
-
+    @Transient
+    private double totalStockSold;
+    @Transient
+    private  double totalSales;
 
     public Store(String name, Integer nif, String address) {
         this.name = name;
@@ -74,7 +77,23 @@ public class Store {
         this.productList = productList;
     }
 
+    public void setTotalStockSold(double totalStockSold) {
+        this.totalStockSold = totalStockSold;
+    }
+
+    public double getTotalStockSold() {
+        return totalStockSold;
+    }
+
     public long getId() {
         return id;
+    }
+
+    public double getTotalSales() {
+        return totalSales;
+    }
+
+    public void setTotalSales(double totalSales) {
+        this.totalSales = totalSales;
     }
 }
