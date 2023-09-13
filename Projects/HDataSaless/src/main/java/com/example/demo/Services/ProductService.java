@@ -4,6 +4,7 @@ import com.example.demo.Data.ProductRepository;
 import com.example.demo.Model.Product;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,9 +12,6 @@ import java.util.Optional;
 public class ProductService {
 
     ProductRepository productRepository;
-
-    List<Product> product;
-
 
     public ProductService(ProductRepository productRepository) {
         this.productRepository = productRepository;
@@ -60,4 +58,19 @@ public class ProductService {
             throw new RuntimeException(e);
         }
     }
+
+    public Product productWithMostSells() {
+        List<Product> products = productRepository.findAll();
+        Optional<Product> maxProduct = products.stream()
+                .max(Comparator.comparingDouble(Product::getStockSold));
+        return maxProduct.orElse(null); // Handle the case where the list is empty
+    }
+
+    public Product getMostExpensiveProduct() {
+        List<Product> products = productRepository.findAll();
+        Optional<Product> mostExpensiveProduct = products.stream().max(Comparator.comparingDouble(Product::getSellPrice));
+        return mostExpensiveProduct.orElse(null);
+    }
+
+
 }

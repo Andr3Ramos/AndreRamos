@@ -25,7 +25,9 @@ public class SaleItem {
     @JoinColumn(name = "product_id")
     private Product product;
     private int quantitySold;
+    @Transient
     private double totalCost;
+
 
     public SaleItem() {
     }

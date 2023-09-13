@@ -31,24 +31,24 @@ public class SaleController {
 
     //Get all the sales
     @GetMapping
-    public Iterable<Sale> getSaleList(){
-        return saleRepository.findAll();
+    public List<Sale> getSaleList(){
+        return saleService.findAll();
     }
 
     //Get a Sale by id
     @RequestMapping(path = "/{id}")
-    public Optional<Sale> getSaleById(@PathVariable long id){
-        return saleRepository.findById(id);
+    public Sale getSaleById(@PathVariable long id){
+        return saleService.findById(id);
     }
     // Add a Sale
    @PostMapping(path = "/add")
     public ResponseEntity<String> createSale(
-        @RequestParam Client clientId,
-        @RequestParam Store storeId)
-      //  @RequestParam List<SaleItem> productIds)
+        @RequestParam long clientId,
+        @RequestParam long storeId,
+        @RequestParam List<SaleItem> saleItems)
    {
-    Sale sale = new Sale(clientId,storeId);
-    return  ResponseEntity.ok("Sale Created Sucefully");
+        saleService.addSale(clientId,storeId,saleItems);
+        return  ResponseEntity.ok("Sale Created Sucefully");
     }
 
     // Get the specific client sales
