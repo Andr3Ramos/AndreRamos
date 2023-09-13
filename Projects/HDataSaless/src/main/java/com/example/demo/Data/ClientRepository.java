@@ -9,8 +9,11 @@ import java.util.List;
 @Repository
 public interface ClientRepository extends CrudRepository<Client,Long> {
 
-    Client findClientById(long id);
 
     List<Client> findAll();
+
+    Client findById(long id);
+
+
 
 }

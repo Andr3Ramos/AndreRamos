@@ -12,7 +12,7 @@ import org.springframework.http.converter.json.GsonBuilderUtils;
 public class Product {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="product_id")
     private long id;
 
@@ -22,8 +22,8 @@ public class Product {
     private double sellPrice;
     private double buyPrice;
     private double stock;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    private Double stockSold;
+    @Transient
+    private Double stockSold=0.0;
 
     public Product(String name, String category, double sellPrice, double buyPrice, double stock) {
         this.name = name;

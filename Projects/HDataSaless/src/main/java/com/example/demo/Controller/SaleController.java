@@ -1,15 +1,14 @@
 package com.example.demo.Controller;
 
 import com.example.demo.Data.SaleRepository;
-import com.example.demo.Model.Client;
-import com.example.demo.Model.Sale;
-import com.example.demo.Model.SaleItem;
+import com.example.demo.Model.*;
 import com.example.demo.Services.SaleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @RestController
@@ -38,24 +37,22 @@ public class SaleController {
 
     //Get a Sale by id
     @RequestMapping(path = "/{id}")
-    public Sale getSaleById(@PathVariable long id){
-        return saleRepository.findSaleById(id);
+    public Optional<Sale> getSaleById(@PathVariable long id){
+        return saleRepository.findById(id);
     }
-
-
-
     // Add a Sale
    @PostMapping(path = "/add")
     public ResponseEntity<String> createSale(
-        @RequestParam int clientId,
-        @RequestParam int storeId,
-        @RequestParam List<SaleItem> productIds){
-        saleRepository.makeSale(clientId,storeId,productIds);
+        @RequestParam Client clientId,
+        @RequestParam Store storeId)
+      //  @RequestParam List<SaleItem> productIds)
+   {
+    Sale sale = new Sale(clientId,storeId);
     return  ResponseEntity.ok("Sale Created Sucefully");
     }
-/*
+
     // Get the specific client sales
-    @GetMapping("/client/{clientId}/sales")
+   /* @GetMapping("/client/{clientId}/sales")
     public ResponseEntity<List<Sale>> getSalesByClientId(@PathVariable long clientId) {
         List<Sale> sales = saleService.getSalesByClientId(clientId);
         if (!sales.isEmpty()) {

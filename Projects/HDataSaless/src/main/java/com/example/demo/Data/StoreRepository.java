@@ -13,22 +13,9 @@ import java.util.List;
 
 @Repository
 public interface StoreRepository extends CrudRepository<Store,Long> {
-    Store findStoreById(long id);
+
 
     List<Store> findAll();
 
-    @Query("INSERT INTO Store (name,nif,address) VALUES(:name, :nif, :address)")
-    @Modifying
-    @Transactional
-    void save(@Param("name")String name,@Param("nif") Integer nif ,@Param("address") String address);
-
-
-    @Query("UPDATE Store s SET s.productList = :product WHERE s.id = :storeId")
-    @Modifying
-    void addProductToStore(@Param("storeId") long storeId, @Param("product")Product product);
-
-
-
-
-
-}
+    Store findById(long id);
+            }

@@ -5,6 +5,7 @@ package com.example.demo.Model;/*
 * */
 import jakarta.persistence.*;
 
+import java.io.Serializable;
 import java.util.*;
 
 @Entity
@@ -12,7 +13,7 @@ import java.util.*;
 public class Store {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="store_id")
     private long id;
     private String name;
@@ -71,5 +72,9 @@ public class Store {
 
     public void setProductList(List<Product> productList) {
         this.productList = productList;
+    }
+
+    public long getId() {
+        return id;
     }
 }
