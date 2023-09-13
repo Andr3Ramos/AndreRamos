@@ -1,9 +1,7 @@
 package com.example.demo.Model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
-import java.io.Serializable;
 import java.util.List;
 /*
  * The com.example.demo.Model.Sale class with be hold all of our data
@@ -26,16 +24,19 @@ public class Sale {
     @ManyToOne
     @JoinColumn(name = "store_id")
     private Store store;
-    private double totalCost;
-    public Sale(Client client, Store store) {
+    private double totalprice;
+    public Sale(Client client, Store store,List<SaleItem> items,double totalprice) {
         this.client = client;
         this.store = store;
         this.items = items;
+        this.totalprice = totalprice;
     }
 
     public Sale() {
 
     }
+
+
 
     public List<SaleItem> getItems() {
         return items;

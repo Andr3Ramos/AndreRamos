@@ -73,17 +73,19 @@ public class ProductController {
     }
 
 
-/*
+
     //Get the product with the most purchases
-    @GetMapping("/most-purchases")
+    @GetMapping("/most-purchases") //TEST
     public Product getProductWithMostPurchases() {
-    return  productRepository.productWithMostSells();
+    return  productService.productWithMostSells();
        }
 
 
     //Get Most expensive product
-     @GetMapping("/most-expensive")
+     @GetMapping("/most-expensive") //TEST
      public ResponseEntity<Product> getMostExpensiveProduct() {
+
+
         Product mostExpensiveProduct = productService.getMostExpensiveProduct();
 
         if (mostExpensiveProduct != null) {
@@ -92,5 +94,4 @@ public class ProductController {
             return ResponseEntity.notFound().build();
         }
     }
-*/
 }
