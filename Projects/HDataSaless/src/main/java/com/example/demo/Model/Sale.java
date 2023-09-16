@@ -1,5 +1,6 @@
 package com.example.demo.Model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -12,9 +13,9 @@ import java.util.List;
 public class Sale {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name="sale_id")
-    private long id;
+    private Long id;
 
     @OneToMany(mappedBy = "sale", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<SaleItem> items;
@@ -24,19 +25,16 @@ public class Sale {
     @ManyToOne
     @JoinColumn(name = "store_id")
     private Store store;
-    private double totalprice;
-    public Sale(Client client, Store store,List<SaleItem> items,double totalprice) {
+
+    public Sale(Client client, Store store,List<SaleItem> items) {
         this.client = client;
         this.store = store;
         this.items = items;
-        this.totalprice = totalprice;
-    }
+          }
 
     public Sale() {
 
     }
-
-
 
     public List<SaleItem> getItems() {
         return items;

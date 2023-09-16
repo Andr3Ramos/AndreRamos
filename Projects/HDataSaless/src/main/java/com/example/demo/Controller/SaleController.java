@@ -1,5 +1,6 @@
 package com.example.demo.Controller;
 
+import com.example.demo.Data.ProductRepository;
 import com.example.demo.Data.SaleRepository;
 import com.example.demo.Model.*;
 import com.example.demo.Services.SaleService;
@@ -7,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 
 @RestController
@@ -18,15 +19,17 @@ public class SaleController {
     SaleService saleService;
 
    private final SaleRepository saleRepository;
+   private final ProductRepository productRepository;
 
     public void setSaleService(SaleService saleService) {
         this.saleService = saleService;
     }
 
     @Autowired
-    public SaleController(SaleService saleService, SaleRepository saleRepository) {
+    public SaleController(SaleService saleService, SaleRepository saleRepository, ProductRepository productRepository) {
         this.saleService = saleService;
         this.saleRepository = saleRepository;
+        this.productRepository = productRepository;
     }
 
     //Get all the sales
@@ -36,20 +39,30 @@ public class SaleController {
     }
 
     //Get a Sale by id
-    @RequestMapping(path = "/{id}")
-    public Sale getSaleById(@PathVariable long id){
-        return saleService.findById(id);
-    }
-    // Add a Sale
-   @PostMapping(path = "/add")
-    public ResponseEntity<String> createSale(
-        @RequestParam long clientId,
-        @RequestParam long storeId,
-        @RequestParam List<SaleItem> saleItems)
-   {
-        saleService.addSale(clientId,storeId,saleItems);
-        return  ResponseEntity.ok("Sale Created Sucefully");
-    }
+
+    @PostMapping(path = "/add")
+           public ResponseEntity<String> createSale(@RequestBody SaleRequest saleRequest) {
+            Long clientId = saleRequest.getClientId();
+            Long storeId = saleRequest.getStoreId();
+            List<ProductRequest> productRequests = saleRequest.getProducts();
+
+            List<Product> products = new ArrayList<>();
+
+            for (ProductRequest productRequest : productRequests) {
+                Long productId = productRequest.getProductId();
+                double quantitySold = productRequest.getQuantitySold();
+
+                Product product = productRepository.findById(productId).orElse(null);
+                if (product != null) {
+                    product.setStockSold(product.getStockSold() + quantitySold);
+                    product.setStock(product.getStock()-quantitySold);
+                    products.add(product);
+                }
+            }
+            saleService.addSale(clientId, storeId, products);
+
+            return ResponseEntity.ok("Sale created successfully.");
+        }
 
     // Get the specific client sales
    /* @GetMapping("/client/{clientId}/sales")
