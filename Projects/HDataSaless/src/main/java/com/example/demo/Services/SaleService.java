@@ -5,6 +5,7 @@ import com.example.demo.Data.ProductRepository;
 import com.example.demo.Data.SaleRepository;
 import com.example.demo.Data.StoreRepository;
 import com.example.demo.Model.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
@@ -13,20 +14,33 @@ import java.util.*;
 @Service
 public class SaleService {
 
-    private final SaleRepository saleRepository;
 
-    private final ClientRepository clientRepository;
+     SaleRepository saleRepository;
 
-    private final StoreRepository storeRepository;
-    
-    private final ProductRepository productRepository;
+     ClientRepository clientRepository;
 
-
-    public SaleService(SaleRepository saleRepository, ClientRepository clientRepository, StoreRepository storeRepository, ProductRepository productRepository) {
+     StoreRepository storeRepository;
+    @Autowired
+    public void setSaleRepository(SaleRepository saleRepository) {
         this.saleRepository = saleRepository;
+    }
+    @Autowired
+    public void setClientRepository(ClientRepository clientRepository) {
         this.clientRepository = clientRepository;
+    }
+    @Autowired
+    public void setStoreRepository(StoreRepository storeRepository) {
         this.storeRepository = storeRepository;
+    }
+    @Autowired
+    public void setProductRepository(ProductRepository productRepository) {
         this.productRepository = productRepository;
+    }
+
+    ProductRepository productRepository;
+
+
+    public SaleService(){
     }
 
 
@@ -39,24 +53,45 @@ public class SaleService {
     }
 
 
+    public Sale addSale(Long clientId, Long storeId, List<Product> products) {
+        // Create a new Sale instance
+        Sale sale = new Sale();
+        Store store = storeRepository.findById(storeId).orElse(null);
+        Client client = clientRepository.findById(storeId).orElse(null);
+        // Set client and store
+        sale.setClient(client);
+        sale.setStore(store);
 
-    //Create a Sale
-       public void addSale(long clientId, long storeId, List<SaleItem> saleItems) { //TEST
-            Client client = clientRepository.findById(clientId);
-            Store store = storeRepository.findById(storeId);
-            double totalPrice = 0.0;
-            List<SaleItem> saleItemList = new ArrayList<>();
-            for (SaleItem saleItem : saleItems ) {
-               SaleItem setSaleItem = new SaleItem(saleItem.getProducts(),saleItem.getQuantitySold());
-                    totalPrice += setSaleItem.getTotalCost();
-            }
-           Sale sale = new Sale(client,store,saleItems,totalPrice);
-
-            saleRepository.save(sale);
-             }
+        // Create SaleItem instances and associate them with the Sale
+        List<SaleItem> saleItems = new ArrayList<>();
+        for (Product product : products) {
+            SaleItem saleItem = new SaleItem();
+            saleItem.setSale(sale);
+            saleItem.setProduct(product);
+            saleItem.setQuantitySold(product.getStockSold());
+            saleItem.setTotalCost(product.getSellPrice()*product.getStockSold());
 
 
 
+
+            // Update product's stock
+            double newStock = product.getStock() - product.getStockSold();
+            product.setStock(newStock);
+            saleItems.add(saleItem);
+            // Update the product in the database
+            productRepository.save(product);
+        }
+
+        // Set the SaleItems in the Sale
+        sale.setItems(saleItems);
+
+
+        // Save the Sale
+      return   saleRepository.save(sale);
+    }
+}
+
+/*
     //Get the sale by a specific client
     public List<Sale> getSalesByClientId(long clientId) { //TEST
         List<Sale> salesByClient = new ArrayList<>();
@@ -108,7 +143,7 @@ public class SaleService {
 
         return productRepository.findById(mostPurchasedProductId);
     }
+*/
 
-}
 
 

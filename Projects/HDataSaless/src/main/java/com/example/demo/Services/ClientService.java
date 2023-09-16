@@ -17,17 +17,18 @@ public class ClientService {
         this.clientRepository = clientRepository;
     }
 
-    public List<Client> findAll() {
+    public List<Client> findAll() { //TESTED
         return clientRepository.findAll();
     }
 
-    public void save(String name){
+    public Client save(String name){ //TESTED
         Client newClient = new Client();
         newClient.setName(name);
         clientRepository.save(newClient);
+        return newClient;
            }
 
-    public Client findById(long id) {
+    public Client findById(long id) { //TESTED
        return  clientRepository.findById(id);
     }
 }

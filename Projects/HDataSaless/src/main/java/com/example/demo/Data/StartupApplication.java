@@ -2,7 +2,6 @@ package com.example.demo.Data;
 
 import com.example.demo.Model.Client;
 import com.example.demo.Model.Product;
-import com.example.demo.Model.Sale;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;

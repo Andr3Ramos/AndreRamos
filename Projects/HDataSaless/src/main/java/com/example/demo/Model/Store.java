@@ -5,7 +5,6 @@ package com.example.demo.Model;/*
 * */
 import jakarta.persistence.*;
 
-import java.io.Serializable;
 import java.util.*;
 
 @Entity
@@ -40,8 +39,7 @@ public class Store {
 
     public void addProduct(Product product) {
         if (this.productList == null) {
-            this.productList = new ArrayList<>();
-        }
+            this.productList = new ArrayList<>();        }
         this.productList.add(product);
     }
 
@@ -95,5 +93,9 @@ public class Store {
 
     public void setTotalSales(double totalSales) {
         this.totalSales = totalSales;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 }

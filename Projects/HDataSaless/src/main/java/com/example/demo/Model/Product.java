@@ -1,20 +1,16 @@
 package com.example.demo.Model;
 
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
-import jakarta.transaction.Transactional;
-import org.springframework.boot.context.properties.bind.DefaultValue;
-import org.springframework.http.converter.json.GsonBuilderUtils;
 
 @Entity
 @Table(name ="products")
 public class Product {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name="product_id")
-    private long id;
+    private Long id;
 
     @JoinColumn(name = "product_name")
     private String name;
@@ -22,7 +18,6 @@ public class Product {
     private double sellPrice;
     private double buyPrice;
     private double stock;
-    @Transient
     private Double stockSold=0.0;
 
     public Product(String name, String category, double sellPrice, double buyPrice, double stock) {
@@ -31,7 +26,7 @@ public class Product {
         this.sellPrice = sellPrice;
         this.buyPrice = buyPrice;
         this.stock = stock;
-                 }
+    }
 
     public void setStockSold(Double stockSold) {
         this.stockSold = stockSold;
@@ -94,6 +89,10 @@ public class Product {
     }
 
     public void setStockSold(double stockSold) {
-        this.stockSold = stockSold;
+        this.stockSold += stockSold;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

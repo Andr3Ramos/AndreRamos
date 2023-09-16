@@ -1,17 +1,12 @@
 package com.example.demo.Controller;
 
-import com.example.demo.Data.ProductRepository;
-import com.example.demo.Data.StoreRepository;
 import com.example.demo.Model.Product;
 import com.example.demo.Model.Store;
-import com.example.demo.Services.ProductService;
 import com.example.demo.Services.StoreService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "api/store")
@@ -79,7 +74,7 @@ public class StoreController {
 
     //Get the products of a specific store
 
-    @RequestMapping(path = "{storeId}/product") //TEST
+    @RequestMapping(path = "{storeId}/product")
     public List<Product> showStoreProducts(@PathVariable long storeId){
         return storeService.showStoreProducts(storeId);
 

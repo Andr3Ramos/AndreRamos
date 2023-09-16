@@ -1,16 +1,12 @@
 package com.example.demo.Controller;
-import com.example.demo.Data.ProductRepository;
 import com.example.demo.Model.Product;
 import com.example.demo.Services.ProductService;
 import com.example.demo.Services.SaleService;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "api/product")
@@ -82,8 +78,8 @@ public class ProductController {
 
 
     //Get Most expensive product
-     @GetMapping("/most-expensive") //TEST
-     public ResponseEntity<Product> getMostExpensiveProduct() {
+     @GetMapping("/most-expensive")
+        public ResponseEntity<Product> getMostExpensiveProduct() {
 
 
         Product mostExpensiveProduct = productService.getMostExpensiveProduct();

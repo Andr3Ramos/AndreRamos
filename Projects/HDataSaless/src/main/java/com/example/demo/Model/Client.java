@@ -10,12 +10,12 @@ import java.util.List;
 @Table(name="clients")
 public class Client  {
 
-   @Id
-   @GeneratedValue(strategy = GenerationType.SEQUENCE)
-   @Column(name = "client_id")
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Column(name = "client_id")
     private long id;
 
-   @Column(name= "name")
+    @Column(name= "name")
     private String name;
 
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -23,7 +23,7 @@ public class Client  {
 
     public Client(String name) {
         this.name = name;
-       }
+    }
 
     public Client() {
 
@@ -37,5 +37,17 @@ public class Client  {
     }
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public List<Sale> getSales() {
+        return sales;
+    }
+
+    public void setSales(List<Sale> sales) {
+        this.sales = sales;
     }
 }
