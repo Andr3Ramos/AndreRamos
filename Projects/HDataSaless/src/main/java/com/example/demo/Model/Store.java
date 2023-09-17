@@ -20,9 +20,9 @@ public class Store {
     private String address;
     @OneToMany
     private List<Product> productList;
-    @Transient
+
     private double totalStockSold;
-    @Transient
+
     private  double totalSales;
 
     public Store(String name, Integer nif, String address) {

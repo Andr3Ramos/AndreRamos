@@ -12,5 +12,5 @@ public interface StoreRepository extends CrudRepository<Store,Long> {
 
 
     List<Store> findAll();
-    Store findById(long id);
+
             }
