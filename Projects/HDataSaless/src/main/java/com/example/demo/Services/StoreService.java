@@ -4,6 +4,7 @@ import com.example.demo.Data.ProductRepository;
 import com.example.demo.Data.StoreRepository;
 import com.example.demo.Model.Product;
 import com.example.demo.Model.Store;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
@@ -29,7 +30,7 @@ public class StoreService {
 
     public Store findById(long id) { //TESTED
         try {
-            return storeRepository.findById(id);
+            return storeRepository.findById(id).orElse(null);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -56,7 +57,7 @@ public class StoreService {
     public void addProductToStore(long productId, long storeId) {//TESTED
 
         Product productRepositoryById = productRepository.findById(productId);
-        Store storeRepositoryById = storeRepository.findById(storeId);
+        Store storeRepositoryById = storeRepository.findById(storeId).orElse(null);
         storeRepositoryById.addProduct(productRepositoryById);
 
         try {
@@ -66,22 +67,24 @@ public class StoreService {
         }
     }
 
-    public List<Product> showStoreProducts(long storeId) { //GIVING ERRORS ON THE TEST
-        Store store = storeRepository.findById(storeId);
+   @Transactional
+    public List<Product> showStoreProducts(long storeId) { //TESTED
+        Store store = storeRepository.findById(storeId).orElse(null);
+        store.getProductList().size();
         return store.getProductList();
     }
 
-    public Store getStoreWithMostStockSold() { //TEST // CANT TEST YET
+    public Store getStoreWithMostStockSold() { //TESTED
         List<Store> stores = storeRepository.findAll();
       
          Optional<Store> store = stores.stream().max(Comparator.comparingDouble(Store::getTotalStockSold));
-         Store storeWithTheMostStockSold = store.orElse(null);
+
                  
-         return storeWithTheMostStockSold;
+         return store.orElse(null);
     }
 
 
-    public Store getStoreWithMostSales() { //TEST // CANT TEST YET
+    public Store getStoreWithMostSales() { //TESTED
         List<Store> stores = storeRepository.findAll();
 
         Optional<Store> store = stores.stream().max(Comparator.comparingDouble(Store::getTotalSales));

@@ -36,6 +36,8 @@ public class Product {
 
     }
 
+
+
     public double getStockSold() {
         return stockSold;
     }

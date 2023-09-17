@@ -35,6 +35,9 @@ public class SaleItem {
         this.product.setStock(product.getStock()-quantitySold);
         this.totalCost = (product.getSellPrice() * quantitySold);
     }
+
+
+
     public void setSale(Sale sale) {
         this.sale = sale;
     }

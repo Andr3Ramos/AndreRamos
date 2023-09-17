@@ -17,8 +17,10 @@ public class Sale {
     @Column(name="sale_id")
     private Long id;
 
-    @OneToMany(mappedBy = "sale", cascade = CascadeType.ALL, orphanRemoval = true)
+
+    @OneToMany(mappedBy = "sale", cascade = CascadeType.MERGE, orphanRemoval = true)
     private List<SaleItem> items;
+
     @ManyToOne
     @JoinColumn(name="client_id")
     private Client client;
