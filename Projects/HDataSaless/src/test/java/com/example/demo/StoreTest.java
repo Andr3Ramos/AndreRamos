@@ -5,16 +5,14 @@ import com.example.demo.Model.Product;
 import com.example.demo.Model.Store;
 import com.example.demo.Services.ProductService;
 import com.example.demo.Services.StoreService;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.SortedMap;
+
+
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -150,7 +148,7 @@ void addProductToStore(){
     assertEquals(store1.getId() ,storeWithMostStockSold.getId() );
 }
 
-   @Test
+    @Test
     void getStoreWithMoreSells(){
     Store store = storeService.save("TestStore", 123, "abc");
     Store store1 = storeService.save("TestStore1", 321, "abcd");
@@ -164,5 +162,7 @@ void addProductToStore(){
     assertNotNull(storeWithMoreSells);
     assertEquals(store1.getId(),storeWithMoreSells.getId());
 }
+
+
 
 }

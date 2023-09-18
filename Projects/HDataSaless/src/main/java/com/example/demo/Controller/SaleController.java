@@ -2,6 +2,8 @@ package com.example.demo.Controller;
 
 import com.example.demo.Data.ProductRepository;
 import com.example.demo.Data.SaleRepository;
+import com.example.demo.Requests.ProductRequest;
+import com.example.demo.Requests.SaleRequest;
 import com.example.demo.Model.*;
 import com.example.demo.Services.SaleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,17 +76,17 @@ public class SaleController {
             return ResponseEntity.notFound().build();
         }
     }
-
+*/
     //Get client with the most buys
    @GetMapping("/client/most-buys")
     public ResponseEntity<Client> getClientWithMostBuys() {
-        Client clientWithMostBuys = saleRepository.getClientWithMostBuys();
+        Client clientWithMostBuys = saleService.getClientWithMostStockSold();
         if (clientWithMostBuys != null) {
             return ResponseEntity.ok(clientWithMostBuys);
         } else {
             return ResponseEntity.notFound().build();
         }
     }
-*/
+
 
 }

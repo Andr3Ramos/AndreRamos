@@ -6,7 +6,6 @@ import com.example.demo.Data.SaleRepository;
 import com.example.demo.Data.StoreRepository;
 import com.example.demo.Model.*;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
@@ -72,11 +71,12 @@ public class SaleService {
             saleItem.setSale(sale);
             saleItem.setProduct(product);
             saleItem.setQuantitySold(product.getStockSold());
-            saleItem.setTotalCost(product.getSellPrice() * product.getStockSold());
+            saleItem.setTotalCost(product.getStockSold() * product.getStockSold());
 
             // Update product's stock
             double newStock = product.getStock() - product.getStockSold();
             product.setStock(newStock);
+            product.setAllStockSoldHistory(product.getStockSold());
             saleItems.add(saleItem);
             // Update the product in the database
             productRepository.save(product);
@@ -103,13 +103,15 @@ public class SaleService {
     }
 
     //Get the client with the most buys
-  /*  public Optional<Client> getClientWithMostStockSold() {  //TEST
-        Map<Long, Integer> clientStockSoldMap = new HashMap<>();
+
+    public Client getClientWithMostStockSold() {  //TEST
+
+        Map<Long, Double> clientStockSoldMap = new HashMap<>();
 
         for (Sale sale : saleRepository.findAll()) {
             Client client = sale.getClient();
-            int stockSold = sale.getItems().stream()
-                    .mapToInt(SaleItem::getQuantitySold)
+            double stockSold = sale.getItems().stream()
+                    .mapToDouble(SaleItem::getQuantitySold)
                     .sum();
 
             if (clientStockSoldMap.containsKey(client.getId())) {
@@ -118,12 +120,10 @@ public class SaleService {
                 clientStockSoldMap.put(client.getId(), stockSold);
             }
         }
-
         Long clientIdWithMostStockSold = Collections.max(clientStockSoldMap.entrySet(), Map.Entry.comparingByValue()).getKey();
-
-        return clientRepository.findById(clientIdWithMostStockSold);
+        return clientRepository.findById(clientIdWithMostStockSold).orElse(null);
     }
-
+/*
 
     //Get the client with the most purchases
     public Product getProductWithMostPurchases() { //TEST

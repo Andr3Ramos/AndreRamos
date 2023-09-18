@@ -19,6 +19,7 @@ public class Product {
     private double buyPrice;
     private double stock;
     private Double stockSold=0.0;
+    private Double allStockSoldHistory = 0.0;
 
     public Product(String name, String category, double sellPrice, double buyPrice, double stock) {
         this.name = name;
@@ -28,9 +29,6 @@ public class Product {
         this.stock = stock;
     }
 
-    public void setStockSold(Double stockSold) {
-        this.stockSold = stockSold;
-    }
 
     public Product() {
 
@@ -41,6 +39,7 @@ public class Product {
     public double getStockSold() {
         return stockSold;
     }
+
     public double getSellPrice() {
         return sellPrice;
     }
@@ -50,7 +49,6 @@ public class Product {
     public void setStock(double stock) {
         this.stock = stock;
     }
-
     public long getId() {
         return id;
     }
@@ -91,10 +89,22 @@ public class Product {
     }
 
     public void setStockSold(double stockSold) {
-        this.stockSold += stockSold;
+        this.stockSold = stockSold;
     }
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public void setStockSold(Double stockSold) {
+        this.stockSold = stockSold;
+    }
+
+    public Double getAllStockSoldHistory() {
+        return allStockSoldHistory;
+    }
+
+    public void setAllStockSoldHistory(Double allStockSoldHistory) {
+        this.allStockSoldHistory += allStockSoldHistory;
     }
 }
