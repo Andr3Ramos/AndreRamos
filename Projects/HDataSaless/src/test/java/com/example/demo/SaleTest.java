@@ -85,8 +85,12 @@ public class SaleTest {
         Client client = clientService.save("TestClient");
         SaleItem saleItem = new SaleItem(product1,5);
         SaleItem saleItem1 = new SaleItem(product2 , 10);
+        SaleItem saleItem3 = new SaleItem(product1,5);
+        productRepository.save(product1);
+        productRepository.save(product2);
         saleItemRepository.save(saleItem);
         saleItemRepository.save(saleItem1);
+        saleItemRepository.save(saleItem3);
 
         List<SaleItem> saleItemList=new ArrayList<>();
         saleItemList.add(saleItem);
@@ -104,6 +108,7 @@ public class SaleTest {
 
         assertNotNull(salesByClient);
         assertEquals(1, salesByClient.size());
+
     }
 
     @Test
@@ -122,10 +127,14 @@ public class SaleTest {
         List<SaleItem> saleItemList=new ArrayList<>();
         saleItemList.add(saleItem);
         saleItemList.add(saleItem1);
+        saleItemRepository.save(saleItem);
+        saleItemRepository.save(saleItem1);
+
 
         Sale sale = saleService.saveSale(client,store,saleItemList);
         saleItemList.get(0).setSale(sale);
         saleItemList.get(1).setSale(sale);
+        saleRepository.save(sale);
         saleItemRepository.save(saleItem);
         saleItemRepository.save(saleItem1);
 
@@ -134,8 +143,6 @@ public class SaleTest {
 
         assertNotNull(clientWithMostBuys);
 
-
-
-
     }
+
 }

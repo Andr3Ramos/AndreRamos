@@ -19,7 +19,7 @@ public class Product {
     private double buyPrice;
     private double stock;
     private Double stockSold=0.0;
-    private Double allStockSoldHistory = 0.0;
+    private Double stockSalesRecord = 0.0;
 
     public Product(String name, String category, double sellPrice, double buyPrice, double stock) {
         this.name = name;
@@ -96,15 +96,12 @@ public class Product {
         this.id = id;
     }
 
-    public void setStockSold(Double stockSold) {
-        this.stockSold = stockSold;
+
+    public Double getStockSalesRecord() {
+        return stockSalesRecord;
     }
 
-    public Double getAllStockSoldHistory() {
-        return allStockSoldHistory;
-    }
-
-    public void setAllStockSoldHistory(Double allStockSoldHistory) {
-        this.allStockSoldHistory += allStockSoldHistory;
+    public void setStockSalesRecord(Double amountPfStockSoldRecord) {
+        this.stockSalesRecord += amountPfStockSoldRecord;
     }
 }
