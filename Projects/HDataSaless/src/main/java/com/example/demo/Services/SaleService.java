@@ -76,7 +76,7 @@ public class SaleService {
             // Update product's stock
             double newStock = product.getStock() - product.getStockSold();
             product.setStock(newStock);
-            product.setAllStockSoldHistory(product.getStockSold());
+            product.setStockSalesRecord(product.getStockSold());
             saleItems.add(saleItem);
             // Update the product in the database
             productRepository.save(product);
@@ -113,6 +113,8 @@ public class SaleService {
             double stockSold = sale.getItems().stream()
                     .mapToDouble(SaleItem::getQuantitySold)
                     .sum();
+
+
 
             if (clientStockSoldMap.containsKey(client.getId())) {
                 clientStockSoldMap.put(client.getId(), clientStockSoldMap.get(client.getId()) + stockSold);
