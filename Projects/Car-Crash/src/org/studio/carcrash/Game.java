@@ -89,6 +89,7 @@ public class Game {
         for (Car c : cars) {
             c.move();
             collisionDetector.check(c);
+            
         }
     }
 }
